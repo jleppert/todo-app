@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -134,6 +135,9 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({
       <DialogContent className="max-w-md" data-testid="category-manager">
         <DialogHeader>
           <DialogTitle>Manage Categories</DialogTitle>
+          <DialogDescription className="sr-only">
+            Create, edit, or delete categories
+          </DialogDescription>
         </DialogHeader>
 
         {loading && !categories.length ? (

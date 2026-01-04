@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -115,6 +116,9 @@ export const TodoForm: React.FC<TodoFormProps> = ({
       <DialogContent className="max-w-md" data-testid="todo-form">
         <DialogHeader>
           <DialogTitle>{todo ? 'Edit Todo' : 'Create Todo'}</DialogTitle>
+          <DialogDescription className="sr-only">
+            {todo ? 'Edit an existing todo item' : 'Create a new todo item'}
+          </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
