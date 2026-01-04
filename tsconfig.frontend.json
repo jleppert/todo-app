@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/frontend",
+    "rootDir": "./src/frontend",
+    "jsx": "react-jsx",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/frontend/*"]
+    }
+  },
+  "include": ["src/frontend/**/*"],
+  "exclude": ["node_modules", "dist", "tests"]
+}
