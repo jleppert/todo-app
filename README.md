@@ -82,7 +82,9 @@ todo-app/
 ├── tsconfig.frontend.json          # Frontend TypeScript config
 ├── jest.backend.config.cjs         # Jest config for backend
 ├── jest.frontend.config.cjs        # Jest config for frontend
-└── jest.integration.config.cjs     # Jest config for Selenium tests
+├── jest.integration.config.cjs     # Jest config for Selenium tests
+├── Dockerfile                      # Docker container for CI
+└── .github/workflows/ci.yml        # GitHub Actions CI pipeline
 ```
 
 ## Getting Started
@@ -268,6 +270,41 @@ yarn test:integration --testPathPattern=todo-crud
 | `todo-sorting` | 4 | Sort by date, order toggle |
 | `category-crud` | 8 | Create, delete, validate categories |
 | `category-grouping` | 8 | Group by category view |
+
+## Docker
+
+A Dockerfile is provided for running the application and tests in a containerized environment.
+
+```bash
+# Build the Docker image
+docker build -t todo-app .
+
+# Run the application
+docker run -p 3000:3000 todo-app
+
+# Run tests in the container
+docker run --rm todo-app yarn test:backend
+docker run --rm todo-app yarn test:frontend
+docker run --rm todo-app yarn test:integration
+```
+
+The Docker image:
+- Uses Node.js 24 (Debian Bookworm)
+- Includes Chromium and ChromeDriver for Selenium integration tests
+- Pre-runs database migrations during build
+- Supports both ARM64 and AMD64 architectures
+
+## CI/CD
+
+GitHub Actions is configured to run all tests on every push to any branch.
+
+**Pipeline Steps:**
+1. Build Docker image (with layer caching)
+2. Run backend tests
+3. Run frontend tests
+4. Run integration tests
+
+The workflow file is located at `.github/workflows/ci.yml`.
 
 ## Adding shadcn/ui Components
 
