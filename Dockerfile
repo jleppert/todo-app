@@ -20,7 +20,6 @@ WORKDIR /app
 
 # Copy package files and prisma schema for postinstall
 COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn .yarn
 COPY prisma prisma
 COPY prisma.config.ts ./
 
