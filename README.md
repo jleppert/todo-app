@@ -6,7 +6,7 @@ A modern full-stack todo application using Node.js native TypeScript support, Ex
 
 | Layer | Technology |
 |-------|------------|
-| **Runtime** | Node.js 22.18+ with native TypeScript |
+| **Runtime** | Node.js 24.12+ (LTS) with native TypeScript |
 | **Backend** | Express.js |
 | **Database** | SQLite with Prisma ORM |
 | **Frontend** | React 18, Redux Toolkit |
@@ -89,7 +89,7 @@ todo-app/
 
 ### Prerequisites
 
-- Node.js 22.18.0 or later
+- Node.js 24.12.0 (LTS) or later
 - Yarn (will be auto-installed via Corepack)
 
 ### Installation
@@ -287,7 +287,7 @@ import { Button } from '@/components/ui/button'
 
 ### Native Node.js TypeScript
 
-This project uses Node.js 22.18+ native TypeScript support instead of transpilation tools like ts-node. The backend code uses only erasable TypeScript syntax (type annotations, interfaces, `import type`), allowing Node.js to run `.ts` files directly by stripping types at runtime.
+This project uses Node.js 24.12+ (LTS) native TypeScript support instead of transpilation tools like ts-node. The backend code uses only erasable TypeScript syntax (type annotations, interfaces, `import type`), allowing Node.js to run `.ts` files directly by stripping types at runtime.
 
 ### ESM Modules
 
