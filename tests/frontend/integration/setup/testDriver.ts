@@ -6,6 +6,11 @@ const DEFAULT_TIMEOUT = 5000;
 export async function createDriver(): Promise<WebDriver> {
   const chromeOptions = new ChromeOptions();
 
+  // Use CHROME_BIN env var if set (for Docker/CI with Chromium)
+  if (process.env.CHROME_BIN) {
+    chromeOptions.setChromeBinaryPath(process.env.CHROME_BIN);
+  }
+
   // Headless mode for CI - comment out for debugging
   chromeOptions.addArguments('--headless=new');
 
@@ -19,8 +24,8 @@ export async function createDriver(): Promise<WebDriver> {
     .setChromeOptions(chromeOptions)
     .build();
 
-  // Set implicit wait
-  await driver.manage().setTimeouts({ implicit: 5000 });
+  // Set implicit wait (keep short to avoid slow failures)
+  await driver.manage().setTimeouts({ implicit: 1000 });
 
   return driver;
 }

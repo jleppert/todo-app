@@ -1,6 +1,7 @@
 module.exports = {
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
+  reporters: ['default', '<rootDir>/tests/streamReporter.cjs'],
   roots: ['<rootDir>/tests/frontend/integration'],
   testMatch: ['**/*.test.ts'],
   moduleFileExtensions: ['ts', 'js', 'json'],

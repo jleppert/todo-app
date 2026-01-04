@@ -57,18 +57,19 @@ export async function stopServer(serverProcess: ChildProcess): Promise<void> {
   if (!serverProcess) return;
 
   return new Promise((resolve) => {
-    serverProcess.on('exit', () => {
-      resolve();
-    });
-
-    serverProcess.kill('SIGTERM');
-
     // Force kill after 5 seconds if graceful shutdown fails
-    setTimeout(() => {
+    const forceKillTimeout = setTimeout(() => {
       if (!serverProcess.killed) {
         serverProcess.kill('SIGKILL');
       }
       resolve();
     }, 5000);
+
+    serverProcess.on('exit', () => {
+      clearTimeout(forceKillTimeout);
+      resolve();
+    });
+
+    serverProcess.kill('SIGTERM');
   });
 }

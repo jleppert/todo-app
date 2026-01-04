@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: todo-app:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run backend tests
+        run: |
+          docker run --rm todo-app:test yarn test:backend --verbose
+
+      - name: Run frontend tests
+        run: |
+          docker run --rm todo-app:test yarn test:frontend --verbose
+
+      - name: Run integration tests
+        run: |
+          docker run --rm todo-app:test yarn test:integration --verbose

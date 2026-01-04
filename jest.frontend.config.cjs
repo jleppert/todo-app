@@ -1,6 +1,7 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
+  reporters: ['default', '<rootDir>/tests/streamReporter.cjs'],
   roots: ['<rootDir>/tests/frontend/unit'],
   testMatch: ['**/*.test.tsx', '**/*.test.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
