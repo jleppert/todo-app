@@ -76,6 +76,7 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({
       await dispatch(
         updateCategory({ id: editingCategory.id, input: { name } })
       ).unwrap();
+      dispatch(fetchTodos());
       setEditingCategory(null);
       setShowForm(false);
       toast.success('Category updated');

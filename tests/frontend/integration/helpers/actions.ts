@@ -208,6 +208,33 @@ export async function editCategory(
   await clickElement(driver, selectors.categoryEditButton(categoryId));
 }
 
+export async function updateCategory(
+  driver: WebDriver,
+  categoryId: number,
+  newName: string
+): Promise<void> {
+  await clickElement(driver, selectors.categoryEditButton(categoryId));
+  await waitForElement(driver, selectors.categoryNameInput);
+
+  // Clear existing text and type new name
+  const input = await driver.findElement({ css: selectors.categoryNameInput });
+  await input.clear();
+  await input.sendKeys(newName);
+
+  await clickElement(driver, selectors.categorySubmit);
+  // Wait for update to complete
+  await driver.sleep(500);
+}
+
+export async function closeCategoryManager(driver: WebDriver): Promise<void> {
+  // Click the X button or outside the dialog
+  const closeButton = await driver.findElement({
+    css: '[data-testid="category-manager"] button[type="button"]:has(svg)',
+  });
+  await closeButton.click();
+  await driver.sleep(300);
+}
+
 // Toast interactions
 export async function waitForToast(driver: WebDriver): Promise<void> {
   await waitForElement(driver, selectors.toast);

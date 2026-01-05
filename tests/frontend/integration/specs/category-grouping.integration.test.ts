@@ -14,6 +14,9 @@ import {
   toggleGroupByCategory,
   createTodo,
   toggleTodoCompletion,
+  openCategoryManager,
+  updateCategory,
+  closeCategoryManager,
 } from '../helpers/actions.ts';
 import {
   assertListIsGrouped,
@@ -181,6 +184,37 @@ describe('Category Grouping Integration', () => {
 
       // Still grouped
       await assertListIsGrouped(driver);
+    }, 30000);
+
+    it('should update category name in grouped view when category is edited', async () => {
+      // Arrange: Create a category with a todo
+      const category = await prisma.category.create({ data: { name: 'Old Name' } });
+
+      await prisma.todo.create({
+        data: { title: 'Test Task', categoryId: category.id },
+      });
+
+      await navigateToApp(driver);
+      await waitForAppLoad(driver);
+
+      // Enable grouping
+      await toggleGroupByCategory(driver);
+      await assertListIsGrouped(driver);
+
+      // Verify old name is shown in group header
+      const pageTextBefore = await driver.findElement({ css: 'body' }).getText();
+      expect(pageTextBefore).toContain('Old Name');
+
+      // Act: Update the category name
+      await openCategoryManager(driver);
+      await updateCategory(driver, category.id, 'New Name');
+      await closeCategoryManager(driver);
+
+      // Assert: New name is shown in group header
+      await driver.sleep(500);
+      const pageTextAfter = await driver.findElement({ css: 'body' }).getText();
+      expect(pageTextAfter).toContain('New Name');
+      expect(pageTextAfter).not.toContain('Old Name');
     }, 30000);
   });
 
