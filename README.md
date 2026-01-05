@@ -349,7 +349,7 @@ The app is wrapped in `<React.StrictMode>` which intentionally double-invokes ef
 
 ## Database
 
-The application uses SQLite with Prisma ORM. See [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) for full schema documentation.
+The application uses SQLite with Prisma ORM. See [DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md) for full schema documentation.
 
 ```bash
 # Run migrations
