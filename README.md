@@ -150,7 +150,7 @@ In development, open http://localhost:5173 for hot reload. In production, only p
 
 ## API Endpoints
 
-See [API.md](API.md) for full documentation including request/response schemas and validation rules.
+See [API.md](docs/API.md) for full documentation including request/response schemas and validation rules.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
