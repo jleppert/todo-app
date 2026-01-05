@@ -2,6 +2,8 @@
 
 A modern full-stack todo application using Node.js native TypeScript support, Express, React, and Redux.
 
+![Todo App Screenshot](docs/screenshot.png)
+
 ## Tech Stack
 
 | Layer | Technology |
