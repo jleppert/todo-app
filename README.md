@@ -142,6 +142,7 @@ In development, open http://localhost:5173 for hot reload. In production, only p
 | `yarn test:frontend` | Run React component tests |
 | `yarn test:integration` | Build frontend and run Selenium integration tests |
 | `yarn db:migrate` | Run database migrations (development) |
+| `yarn db:reset` | Drop database and reapply all migrations |
 | `yarn db:studio` | Open Prisma Studio GUI |
 | `yarn db:generate` | Regenerate Prisma client |
 

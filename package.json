@@ -20,6 +20,7 @@
     "test:integration": "yarn build:frontend && NODE_OPTIONS='--experimental-vm-modules --disable-warning=ExperimentalWarning' jest --config jest.integration.config.cjs",
     "test": "yarn test:backend && yarn test:frontend",
     "db:generate": "prisma generate",
+    "db:reset": "prisma migrate reset",
     "db:migrate": "prisma migrate dev",
     "db:migrate:prod": "prisma migrate deploy",
     "db:push": "prisma db push",
