@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import morgan from 'morgan';
 import { categoriesRouter } from './routes/categories.ts';
 import { todosRouter } from './routes/todos.ts';
+import { geoRouter } from './routes/geo.ts';
 import { errorHandler } from './middleware/errorHandler.ts';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, '../../dist/frontend')));
 // API Routes
 app.use('/api/categories', categoriesRouter);
 app.use('/api/todos', todosRouter);
+app.use('/api/geo', geoRouter);
 
 // Serve the React app for all other routes (must be after API routes)
 app.get('*', (req, res) => {

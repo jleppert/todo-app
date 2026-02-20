@@ -1,6 +1,6 @@
-# Todo App
+# PipeAid GIS
 
-A modern full-stack todo application using Node.js native TypeScript support, Express, React, and Redux.
+A full-stack GIS application with interactive map visualization, shapefile/geodatabase upload and conversion, Azure cloud storage, and a todo management backend. Built with Node.js native TypeScript, Express, React, Redux, and MapLibre GL.
 
 ![Todo App Screenshot](docs/screenshot.png)
 
@@ -12,6 +12,9 @@ A modern full-stack todo application using Node.js native TypeScript support, Ex
 | **Backend** | Express.js |
 | **Database** | SQLite with Prisma ORM |
 | **Frontend** | React 18, Redux Toolkit |
+| **Map** | MapLibre GL JS |
+| **GIS Processing** | GDAL (gdal-async) |
+| **Cloud Storage** | Azure Blob Storage |
 | **UI Components** | shadcn/ui, Radix UI |
 | **Styling** | Tailwind CSS |
 | **Bundler** | Vite |
@@ -22,6 +25,7 @@ A modern full-stack todo application using Node.js native TypeScript support, Ex
 
 | Document | Description |
 |----------|-------------|
+| [docs/MAP.md](docs/MAP.md) | Map system architecture, GIS upload pipeline, API endpoints, components |
 | [docs/API.md](docs/API.md) | REST API endpoints, request/response schemas, validation rules |
 | [docs/DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md) | Database tables, Prisma schema, queries |
 | [docs/USER_STORIES.md](docs/USER_STORIES.md) | Feature requirements and user stories |
@@ -35,7 +39,11 @@ todo-app/
 │   │   ├── server.ts              # Express server entry point
 │   │   ├── routes/
 │   │   │   ├── categories.ts      # Category CRUD endpoints
-│   │   │   └── todos.ts           # Todo CRUD endpoints
+│   │   │   ├── todos.ts           # Todo CRUD endpoints
+│   │   │   └── geo.ts             # GIS upload/CRUD endpoints
+│   │   ├── services/
+│   │   │   ├── azureStorage.ts    # Azure Blob Storage client
+│   │   │   └── geoConverter.ts    # GDAL → GeoJSON conversion
 │   │   ├── middleware/
 │   │   │   └── errorHandler.ts    # Error handling middleware
 │   │   ├── validation/
@@ -47,15 +55,21 @@ todo-app/
 │       ├── App.tsx                # Root component
 │       ├── globals.css            # Tailwind CSS + shadcn theme
 │       ├── components/
-│       │   └── ui/                # shadcn/ui components
-│       │       ├── button.tsx
-│       │       └── card.tsx
+│       │   ├── ui/                # shadcn/ui components
+│       │   │   ├── button.tsx
+│       │   │   ├── map.tsx        # MapLibre GL component library
+│       │   │   └── ...
+│       │   └── map/
+│       │       ├── MapPage.tsx    # Main map view (default route)
+│       │       ├── UploadPanel.tsx # Layer management sidebar
+│       │       └── GeoJSONLayer.tsx # GeoJSON map renderer
 │       ├── lib/
 │       │   └── utils.ts           # Utility functions (cn)
 │       └── store/
 │           ├── index.ts           # Redux store configuration
 │           ├── todosSlice.ts      # Todo state & async thunks
-│           └── categoriesSlice.ts # Category state & async thunks
+│           ├── categoriesSlice.ts # Category state & async thunks
+│           └── geoSlice.ts        # GIS layer state & async thunks
 ├── tests/
 │   ├── backend/
 │   │   └── *.test.ts              # API endpoint tests
@@ -69,6 +83,7 @@ todo-app/
 │       │   └── specs/             # Integration test specs
 │       └── setupTests.ts
 ├── docs/                           # Documentation
+│   ├── MAP.md                      # Map system & GIS pipeline
 │   ├── API.md                      # REST API specification
 │   ├── DATABASE_SCHEMA.md          # Database schema
 │   ├── FRONTEND.md                 # Frontend architecture
@@ -150,10 +165,15 @@ In development, open http://localhost:5173 for hot reload. In production, only p
 
 ## API Endpoints
 
-See [API.md](docs/API.md) for full documentation including request/response schemas and validation rules.
+See [API.md](docs/API.md) for todo/category endpoints and [MAP.md](docs/MAP.md) for GIS endpoints.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| POST | `/api/geo/upload` | Upload and convert a shapefile or geodatabase |
+| GET | `/api/geo/layers` | List all GIS layers (without GeoJSON) |
+| GET | `/api/geo/layers/:id` | Get a layer with full GeoJSON |
+| PUT | `/api/geo/layers/:id` | Replace a layer with a new file |
+| DELETE | `/api/geo/layers/:id` | Delete a layer and its Azure blob |
 | GET | `/api/categories` | List all categories |
 | POST | `/api/categories` | Create a category |
 | PUT | `/api/categories/:id` | Update a category |
@@ -167,30 +187,17 @@ See [API.md](docs/API.md) for full documentation including request/response sche
 
 ## Frontend Routes
 
-The frontend uses React Router with HTML5 pushstate for client-side routing. All routes are shareable and bookmarkable.
-
-### Status Filters (path-based)
+The frontend uses React Router with HTML5 pushstate. The default view is the interactive map.
 
 | Route | Description |
 |-------|-------------|
+| `/map` | Map view with layer management (default) |
 | `/todos` | All todos |
 | `/todos/active` | Active (incomplete) todos only |
 | `/todos/completed` | Completed todos only |
+| `/categories` | Category manager |
 
-### Category Filter (query param)
-
-Combine with any status route:
-- `/todos?category=1` - Filter by category ID
-- `/todos/active?category=2` - Active todos in category 2
-
-### Modal Routes
-
-| Route | Description |
-|-------|-------------|
-| `/todos/new` | Open create todo dialog |
-| `/todos/:id/edit` | Open edit dialog for specific todo |
-| `/todos/active/new` | Create todo (preserves active filter) |
-| `/categories` | Open category manager dialog |
+`/` and unknown routes redirect to `/map`.
 
 ## Testing
 
@@ -365,6 +372,9 @@ yarn db:studio
 |----------|---------|-------------|
 | `PORT` | `3000` | Server port |
 | `DATABASE_URL` | `file:./dev.db` | SQLite database path |
+| `AZURE_STORAGE_ACCOUNT_NAME` | — | Azure Storage account name |
+| `AZURE_STORAGE_ACCOUNT_KEY` | — | Azure Storage account key |
+| `AZURE_STORAGE_CONTAINER_NAME` | — | Azure Blob container for GIS file storage |
 
 ## License
 

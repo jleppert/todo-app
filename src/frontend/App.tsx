@@ -1,14 +1,15 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { TodoApp } from './components/todos/TodoApp';
+import { MapPage } from './components/map/MapPage';
 import { Toaster } from './components/ui/sonner';
 
 const App: React.FC = () => {
   return (
     <>
       <Routes>
-        {/* Redirect root to /todos */}
-        <Route path="/" element={<Navigate to="/todos" replace />} />
+        {/* Redirect root to /map */}
+        <Route path="/" element={<Navigate to="/map" replace />} />
 
         {/* Main todo routes with optional status filter */}
         <Route path="/todos" element={<TodoApp />}>
@@ -28,8 +29,11 @@ const App: React.FC = () => {
         {/* Category manager modal route */}
         <Route path="/categories" element={<TodoApp />} />
 
-        {/* Fallback - redirect unknown routes to /todos */}
-        <Route path="*" element={<Navigate to="/todos" replace />} />
+        {/* Map page */}
+        <Route path="/map" element={<MapPage />} />
+
+        {/* Fallback - redirect unknown routes to /map */}
+        <Route path="*" element={<Navigate to="/map" replace />} />
       </Routes>
       <Toaster />
     </>

@@ -68,20 +68,27 @@ describe('App Router', () => {
         expect(screen.getByTestId('todo-app')).toBeInTheDocument();
       });
     });
+
+    it('should render MapPage at /map', async () => {
+      renderApp('/map');
+      await waitFor(() => {
+        expect(screen.getByTestId('map-page')).toBeInTheDocument();
+      });
+    });
   });
 
   describe('Redirects', () => {
-    it('should redirect from / to /todos', async () => {
+    it('should redirect from / to /map', async () => {
       renderApp('/');
       await waitFor(() => {
-        expect(screen.getByTestId('todo-app')).toBeInTheDocument();
+        expect(screen.getByTestId('map-page')).toBeInTheDocument();
       });
     });
 
-    it('should redirect unknown routes to /todos', async () => {
+    it('should redirect unknown routes to /map', async () => {
       renderApp('/unknown-route');
       await waitFor(() => {
-        expect(screen.getByTestId('todo-app')).toBeInTheDocument();
+        expect(screen.getByTestId('map-page')).toBeInTheDocument();
       });
     });
   });

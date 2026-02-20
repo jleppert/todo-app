@@ -37,3 +37,17 @@ model Todo {
   @@index([createdAt])
   @@map("todos")
 }
+
+model GeoLayer {
+  id           Int      @id @default(autoincrement())
+  name         String
+  fileName     String   @map("file_name")
+  fileType     String   @map("file_type")
+  blobUrl      String   @map("blob_url")
+  geojson      String
+  featureCount Int      @map("feature_count")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("geo_layers")
+}

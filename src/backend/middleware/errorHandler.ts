@@ -78,6 +78,22 @@ export function errorHandler(
     return;
   }
 
+  // Handle Multer file upload errors
+  if (err.constructor.name === 'MulterError') {
+    const multerErr = err as Error & { code: string; field?: string };
+    const message = multerErr.code === 'LIMIT_FILE_SIZE'
+      ? 'File is too large'
+      : multerErr.message;
+    res.status(400).json({
+      error: {
+        code: 'VALIDATION_ERROR',
+        message,
+        details: multerErr.field ? [{ field: multerErr.field, message }] : undefined,
+      },
+    });
+    return;
+  }
+
   // Handle our custom AppError
   if (err instanceof AppError) {
     res.status(err.statusCode).json({

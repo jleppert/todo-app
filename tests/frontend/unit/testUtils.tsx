@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import todosReducer, { TodosState } from '../../../src/frontend/store/todosSlice';
 import categoriesReducer, { CategoriesState } from '../../../src/frontend/store/categoriesSlice';
+import geoReducer, { GeoState } from '../../../src/frontend/store/geoSlice';
 import type { Todo, Category } from '../../../src/frontend/types';
 
 // Mock data factories
@@ -52,19 +53,32 @@ export const defaultCategoriesState: CategoriesState = {
   error: null,
 };
 
+export const defaultGeoState: GeoState = {
+  layers: [],
+  layerGeoJSON: {},
+  visibleLayerIds: [],
+  focusLayerId: null,
+  loading: false,
+  uploading: false,
+  error: null,
+};
+
 // Create mock store
 export const createMockStore = (preloadedState: {
   todos?: TodosState;
   categories?: CategoriesState;
+  geo?: GeoState;
 } = {}) => {
   return configureStore({
     reducer: {
       todos: todosReducer,
       categories: categoriesReducer,
+      geo: geoReducer,
     },
     preloadedState: {
       todos: defaultTodosState,
       categories: defaultCategoriesState,
+      geo: defaultGeoState,
       ...preloadedState,
     },
   });

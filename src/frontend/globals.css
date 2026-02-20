@@ -57,3 +57,172 @@
     @apply bg-background text-foreground;
   }
 }
+
+.maplibregl-ctrl-attrib {
+  display: none !important;
+}
+
+/* Algolia Autocomplete - layer search */
+.layer-search .aa-Autocomplete {
+  position: relative;
+}
+
+.layer-search .aa-Form {
+  display: flex;
+  align-items: center;
+  border: 1px solid hsl(var(--border));
+  border-radius: calc(var(--radius) - 2px);
+  background: hsl(var(--background));
+  padding: 0;
+  height: 32px;
+}
+
+.layer-search .aa-Form:focus-within {
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 1px hsl(var(--ring) / 0.3);
+}
+
+.layer-search .aa-InputWrapperPrefix {
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+}
+
+.layer-search .aa-InputWrapperSuffix {
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  margin-left: auto;
+}
+
+.layer-search .aa-SubmitButton,
+.layer-search .aa-ClearButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: hsl(var(--muted-foreground));
+  display: flex;
+  align-items: center;
+}
+
+.layer-search .aa-ClearButton:hover {
+  color: hsl(var(--foreground));
+}
+
+.layer-search .aa-SubmitButton svg,
+.layer-search .aa-ClearButton svg {
+  width: 14px;
+  height: 14px;
+}
+
+.layer-search .aa-Input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  color: hsl(var(--foreground));
+  padding: 0 4px;
+  height: 100%;
+  width: 100%;
+}
+
+.layer-search .aa-Input::placeholder {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Hide autocomplete dropdown panel (renders at body level) */
+.aa-Panel,
+.aa-PanelLayout,
+.aa-Panel--scrollable,
+.aa-DetachedSearchButton {
+  display: none !important;
+}
+
+/* GeoJSON feature popups */
+.maplibregl-popup-content {
+  padding: 0 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18) !important;
+  overflow: hidden;
+}
+
+.maplibregl-popup-close-button {
+  font-size: 18px;
+  padding: 6px 10px;
+  color: #888;
+  z-index: 1;
+}
+
+.maplibregl-popup-close-button:hover {
+  color: #000;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.geo-popup-title {
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.geo-popup-title-value {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+}
+
+.geo-popup-title-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 2px;
+  text-transform: capitalize;
+}
+
+.geo-popup {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.geo-popup table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.geo-popup tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.025);
+}
+
+.geo-popup-key {
+  padding: 5px 12px;
+  font-weight: 600;
+  color: #555;
+  white-space: nowrap;
+  vertical-align: top;
+  text-transform: capitalize;
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.geo-popup-val {
+  padding: 5px 14px;
+  color: #222;
+  word-break: break-word;
+}
+
+.geo-popup-empty {
+  padding: 16px 20px;
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+}

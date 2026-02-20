@@ -19,6 +19,8 @@ module.exports = {
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/frontend/$1',
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
+    '^maplibre-gl$': '<rootDir>/tests/frontend/__mocks__/maplibre-gl.ts',
+    '^maplibre-gl/dist/maplibre-gl\\.css$': '<rootDir>/tests/frontend/__mocks__/styleMock.ts',
+    '\\.(css|less|scss|sass)$': '<rootDir>/tests/frontend/__mocks__/styleMock.ts'
   }
 };

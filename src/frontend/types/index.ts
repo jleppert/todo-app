@@ -58,6 +58,21 @@ export interface UpdateCategoryInput {
   name: string;
 }
 
+export interface GeoLayer {
+  id: number;
+  name: string;
+  fileName: string;
+  fileType: string;
+  blobUrl: string;
+  featureCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface GeoLayerWithGeoJSON extends GeoLayer {
+  geojson: GeoJSON.FeatureCollection;
+}
+
 export interface ApiError {
   code: string;
   message: string;
